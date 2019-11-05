@@ -1,0 +1,90 @@
+C51 COMPILER V9.54   4                                                                     11/05/2019 11:49:12 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 4
+OBJECT MODULE PLACED IN 4.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 4.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg52.h>              //including sfr registers for ports of the controller
+   2          #include<lcd.h>
+   3          
+   4          //LCD Module Connections
+   5          sbit RS = P0^0;                                                                   
+   6          sbit EN = P0^1;                            
+   7          sbit D0 = P2^0;
+   8          sbit D1 = P2^1;
+   9          sbit D2 = P2^2;
+  10          sbit D3 = P2^3;
+  11          sbit D4 = P2^4;
+  12          sbit D5 = P2^5;
+  13          sbit D6 = P2^6;
+  14          sbit D7 = P2^7;
+  15          //End LCD Module Connections
+  16          void Delay(int a)
+  17          {
+  18   1          int j;
+  19   1          int i;
+  20   1          for(i=0;i<a;i++)
+  21   1          {
+  22   2              for(j=0;j<100;j++)
+  23   2              {
+  24   3              }
+  25   2          }
+  26   1      }
+  27          void main()
+  28          {
+  29   1        int i;
+  30   1        Lcd8_init();                                  
+*** WARNING C206 IN LINE 30 OF 4.c: 'Lcd8_init': missing function-prototype
+  31   1        while(1)
+  32   1        {                                   
+  33   2          Lcd8_Set_Cursor(1,1);
+  34   2          Lcd8_Write_String("Attendance");
+  35   2          Lcd8_Set_Cursor(2,1);
+  36   2          Lcd8_Write_String("  Manager");
+  37   2          Delay(1000);
+  38   2          Lcd8_Clear();
+  39   2          Delay(1000);
+  40   2          Lcd8_Set_Cursor(1,1);
+  41   2          Lcd8_Write_String("Attendance");
+  42   2          Lcd8_Set_Cursor(2,1);
+  43   2          Lcd8_Write_String("  Manager");
+  44   2          /*for(i=0;i<15;i++)
+  45   2          {
+  46   2            Delay(1000);
+  47   2            Lcd8_Shift_Left();
+  48   2          }
+  49   2          for(i=0;i<15;i++)
+  50   2          {
+  51   2            Delay(1000);
+  52   2            Lcd8_Shift_Right();
+  53   2          }
+  54   2          
+C51 COMPILER V9.54   4                                                                     11/05/2019 11:49:12 PAGE 2   
+
+  55   2          Delay(3000);*/
+  56   2        }
+  57   1      }
+*** WARNING C280 IN LINE 29 OF 4.c: 'i': unreferenced local variable
+  58          
+  59          
+  60          
+  61          
+*** WARNING C290 IN LINE 84 OF 4.c: missing return value
+*** WARNING C290 IN LINE 176 OF 4.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    688    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      17
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  4 WARNING(S),  0 ERROR(S)
