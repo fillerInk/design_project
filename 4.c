@@ -14,6 +14,7 @@ extern bit D7;
 
 void Lcd_Delay(int a)
 {
+	  
     int j;
     int i;
     for(i=0;i<a;i++)
@@ -168,6 +169,7 @@ int state = 0;
 char c;
 void main()
 {
+	//shibija says hi
 	int i;
 	Lcd8_init();    
   sw1 =1;
