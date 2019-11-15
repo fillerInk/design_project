@@ -167,16 +167,47 @@ void Delay(int a)
 int state = 0;
 char c;
 void main()
-{
+{  
 	int i;
+	int flag;
+	int attendance[10][5];
+		
 	Lcd8_init();    
   sw1 =1;
 	sw2=1;
 	sw3=1;
+	i = 1;
+	flag = 1;
 	
+	do{		
+	flag = 0;	
+  Lcd8_Set_Cursor(1,4);		
+	Lcd8_Write_String("Roll no ");
+	Lcd8_Write_Char(i+'0');
+	Lcd8_Set_Cursor(2,0);		
+	Lcd8_Write_String("present");
+	Lcd8_Set_Cursor(2,10);		
+	Lcd8_Write_String("absent");
 	
+  if(sw1==0){
+	  attendance[i][1]=1;
+		i++;
+		
+	}	
+  else if(sw3==0){
+	  attendance[i][1]=0;
+		i++;
+	}			
+	else if(sw2==0){
+		Lcd8_Clear();
+		Lcd8_Set_Cursor(1,1);
+		Lcd8_Write_Char(attendance[1][1]+'0');
+	}
+		
+	flag=1;	
+	}while(flag == 1);
  	
-  while(1)
+ /* while(1)
   { 
   		
 		
@@ -201,7 +232,7 @@ void main()
 		}*/
 		
 	//for(i=0;i<3;i++){
-    Lcd8_Set_Cursor(1,0);
+   /* Lcd8_Set_Cursor(1,0);
 	  Lcd8_Write_String("Attendance of ");
 		c='0';
 		Lcd8_Write_Char(c);	
@@ -211,12 +242,15 @@ void main()
 			Lcd8_Set_Cursor(1,0);
 	    Lcd8_Write_String("Attendance of ");
 			Lcd8_Write_Char(c);	
-		//}
-		}
+		//}*/
 		
 		
-}
+	
 	}
+		
+		
+
+	
 
 
 
