@@ -1,4 +1,8 @@
 #include<reg52.h>							 //including sfr registers for ports of the controller
+#include <stdlib.h>
+#include <string.h>
+
+
 
 extern bit RS;                                                                   
 extern bit EN;                           
@@ -164,14 +168,25 @@ void Delay(int a)
     }
 }
 
+
+
+
 int state = 0;
 char c;
 void main()
 {  
 	int i;
+	int j;
+	int mode;
 	int flag;
-	int attendance[10][5];
-		
+	int att1;
+	int att2;
+	int att3;
+	int attendance[5][6];
+	int attendedClasses[5];
+	char num[2];
+	char xdata str[5];
+
 	Lcd8_init();    
   sw1 =1;
 	sw2=1;
@@ -179,72 +194,106 @@ void main()
 	i = 1;
 	flag = 1;
 	
+
+	for(j=0;j<6;j++){ 
+	for(i=0;i<5;i++){
 	do{		
+		
+	/*int num1 = i%10;
+	int num2 = (i/10)%10;*/
+  		
 	flag = 0;	
-  Lcd8_Set_Cursor(1,4);		
-	Lcd8_Write_String("Roll no ");
-	Lcd8_Write_Char(i+'0');
+  Lcd8_Set_Cursor(1,2);
+  Lcd8_Write_String("Day ");
+	Lcd8_Write_Char((j+1)+'0');
+	Lcd8_Write_String(" Roll ");
+	Lcd8_Write_Char((i+1)+'0');
+	//Lcd8_Write_Char(num1+'0');	
 	Lcd8_Set_Cursor(2,0);		
 	Lcd8_Write_String("present");
 	Lcd8_Set_Cursor(2,10);		
 	Lcd8_Write_String("absent");
 	
   if(sw1==0){
-	  attendance[i][1]=1;
-		i++;
-		
+	  attendance[i][j]=1;
+		break;
 	}	
   else if(sw3==0){
-	  attendance[i][1]=0;
-		i++;
+	  attendance[i][j]=0;
+		break;
 	}			
-	else if(sw2==0){
-		Lcd8_Clear();
-		Lcd8_Set_Cursor(1,1);
-		Lcd8_Write_Char(attendance[1][1]+'0');
+	
+	if(i==21){
+	 Lcd8_Clear();
+	break;
 	}
-		
+
 	flag=1;	
+
 	}while(flag == 1);
- 	
- /* while(1)
-  { 
-  		
-		
-		/*if(sw2==0){
-		  state =!state;
-    }
-		
-		
-    if(state==0) {		
-    Lcd8_Set_Cursor(1,1);
-	  Lcd8_Write_String("Attendance");
-		Lcd8_Set_Cursor(2,1);
-		Lcd8_Write_String("  Manager");
-    
+ }
+	}
+	
+  Lcd8_Clear();
+  Lcd8_Set_Cursor(1,1);
+  Lcd8_Write_String("Calculating");
+  Delay(5000);
+  
+	for(j=0;j<5;j++){ 
+		attendedClasses[j]=0;
+	}
+	
+	for(j=0;j<5;j++){
+		for(i=0;i<6;i++){
+		  if(attendance[j][i]==1){
+		    	attendedClasses[j]++;
+			}
 		}
+	}
+	
+	
+	Lcd8_Clear();
+	for(i=0;i<5;i++){
+	 // attendedClasses[i] = (attendedClasses[i]/6)*100;
+	 
+		/*att1 = attendedClasses[i]%10;
+	  att2 = (attendedClasses[i]/10)%10;
+		att3 = (attendedClasses[i]/100)%10;*/
+		//sprintf(str,"%4.1",attendedClasses[i]);	
 		
-		else if(state=1){
-			Lcd8_Clear();
-			Lcd8_Set_Cursor(1,1);
-	    Lcd8_Write_String("Menu");
-		  Delay(5000);
-		}*/
+		Lcd8_Set_Cursor(1,0);
+		Lcd8_Write_String("Atn of stdnt ");
+		Lcd8_Write_Char((i+1)+'0');
+		Lcd8_Set_Cursor(2,0);
+		Lcd8_Write_Char(attendedClasses[i]+'0');
+		Lcd8_Write_String("/6");
 		
-	//for(i=0;i<3;i++){
-   /* Lcd8_Set_Cursor(1,0);
-	  Lcd8_Write_String("Attendance of ");
-		c='0';
-		Lcd8_Write_Char(c);	
-		if(sw3==0){
-			c=c+'1';
-			Lcd8_Clear();
-			Lcd8_Set_Cursor(1,0);
-	    Lcd8_Write_String("Attendance of ");
-			Lcd8_Write_Char(c);	
-		//}*/
-		
-		
+		/*Lcd8_Write_Char(att3+'0');
+		Lcd8_Write_Char(att2+'0');
+		Lcd8_Write_Char(att1+'0');*/
+		//Lcd8_Write_String(str);
+		//Lcd8_Write_Char('%');
+		Delay(5000);
+	}
+	
+	Lcd8_Clear();
+	Lcd8_Set_Cursor(1,0);
+	Lcd8_Write_String("With shortage");
+	Lcd8_Set_Cursor(2,1);
+	for(i=0;i<5;i++){
+	  if(attendedClasses[i]<5){
+      Lcd8_Write_Char((i+1)+'0');
+      if(i<4)
+			  Lcd8_Write_String(",");			
+		}
+	}
+	Delay(10000);
+	
+
+   	
+	
+ 
+ 	
 	
 	}
 		
